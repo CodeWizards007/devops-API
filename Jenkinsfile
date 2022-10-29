@@ -47,6 +47,8 @@ pipeline {
                     protocol: 'http',
                     repository: 'maven-app', 
                     version: '1.0'
+
+                    
                 }
             }
         }

@@ -41,7 +41,7 @@ pipeline {
                     [[artifactId: 'achat', classifier: '', 
                     file: 'target/achat-1.0.jar', type: 'jar']], 
                     credentialsId: '', groupId: 'tn.esprit.rh', 
-                    nexusUrl: '20.150.204.104/nexus/', 
+                    nexusUrl: '20.150.204.104/nexus', 
                     nexusVersion: 'nexus2', 
                     protocol: 'http',
                     repository: 'maven-app', 

@@ -25,5 +25,29 @@ pipeline {
              }
            }
         }
+        
+
+        stage("build poject")
+        {
+            steps{
+                sh "mvn clean package"
+            }
+        }
+        stage("upload artifact on nexus")
+        {
+            steps{
+                script{
+                    nexusArtifactUploader artifacts: 
+                    [[artifactId: 'achat', classifier: '', 
+                    file: 'target/achat.jar', type: 'jar']], 
+                    credentialsId: '', groupId: 'tn.esprit.rh', 
+                    nexusUrl: '20.150.204.104/nexus/', 
+                    nexusVersion: 'nexus2', 
+                    protocol: 'http',
+                    repository: 'maven-app', 
+                    version: '1.0'
+                }
+            }
+        }
     }
 }

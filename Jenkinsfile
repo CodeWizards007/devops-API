@@ -37,6 +37,7 @@ pipeline {
         {
             steps{
                 script{
+                    
                     nexusArtifactUploader artifacts: 
                     [[artifactId: 'achat', classifier: '', 
                     file: 'target/achat-1.0.jar', type: 'jar']], 

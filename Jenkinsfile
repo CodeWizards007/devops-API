@@ -48,7 +48,6 @@ pipeline {
                     repository: 'maven-app', 
                     version: '1.0'
 
-                    
                 }
             }
         }

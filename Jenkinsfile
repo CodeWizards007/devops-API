@@ -40,13 +40,13 @@ pipeline {
 
                     nexusArtifactUploader artifacts: 
                     [[artifactId: 'achat', classifier: '', 
-                    file: 'target/achat-1.0.jar', type: 'jar']], 
+                    file: 'target/achat-1.0.0.jar', type: 'jar']], 
                     credentialsId: 'jenkins-nexus-auth', groupId: 'tn.esprit.rh', 
-                    nexusUrl: '127.0.0.1:8081', 
+                    nexusUrl: '20.150.204.104/nexus', 
                     nexusVersion: 'nexus2', 
                     protocol: 'http',
                     repository: 'maven-app', 
-                    version: '1.0'
+                    version: '1.0.0'
 
                 }
             }

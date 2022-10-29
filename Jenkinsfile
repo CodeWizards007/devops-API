@@ -42,7 +42,7 @@ pipeline {
                     [[artifactId: 'achat', classifier: '', 
                     file: 'target/achat-1.0.jar', type: 'jar']], 
                     credentialsId: 'jenkins-nexus-auth', groupId: 'tn.esprit.rh', 
-                    nexusUrl: '20.150.204.104/nexus', 
+                    nexusUrl: '127.0.0.1:8081', 
                     nexusVersion: 'nexus2', 
                     protocol: 'http',
                     repository: 'maven-app', 

@@ -15,7 +15,7 @@ pipeline {
         // Repository where we will upload the artifact
         NEXUS_REPOSITORY = "maven-app"
         // Jenkins credential id to authenticate to Nexus OSS
-        NEXUS_CREDENTIAL_ID = "nexus-user-credentials" // 3malt credentials f jenkins w 3aythomlhom houni for security reasons 
+        NEXUS_CREDENTIAL_ID = "nexus-user-credentials" // 3malt credentials f jenkins w 3aythomlhom houni for security reasons
     } 
        
     stages {
@@ -84,6 +84,26 @@ pipeline {
                 echo " testing the app .."
                 sh "mvn test"
             }
+        }
+
+        stage("build docker image")
+        {
+            steps{
+               echo "building docker images"
+                buildImage("hamdinh98/images-repo:maven-${IMAGE_NAME}")
+            }
+        }
+        stage("pushing docker image to dockerhub")
+        {
+         steps{
+         echo "pushing docker images ... "
+            withCredentials([usernamePassword(credentialsId: 'docker-hub-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+               echo "login to dockerhub images repos"
+               sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
+               echo "push the images to dockerhub"
+               sh "docker push hamdinh98/images-repo:maven-${IMAGE_NAME}"
+              }    
+        }           
         }
       stage("Publish to Nexus") {
             steps {

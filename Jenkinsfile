@@ -43,8 +43,9 @@ pipeline {
                         sh 'git remote set-url origin  https://${USERNAME}:${PASSWORD}@github.com/CodeWizards007/devops-API'
                         sh 'git add .'
                         sh 'git commit -m "update project version"'
+                        sh 'git pull origin hamdi'
                         sh 'git branch'
-                        sh 'git push -o ci.skip origin HEAD:master '
+                        sh 'git push origin HEAD:hamdi'
                     }
                 }
             }

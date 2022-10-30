@@ -1,28 +1,31 @@
 pipeline {
     agent any
-    tools { 
-        maven 'maven'  
-    }
-    stages {
-        stage ('Git checkout') { 
-          steps {
-            git branch: 'riadh', url: 'https://github.com/CodeWizards007/devops-API.git'
-          }
-          
-        }
-    
 
-        stage ('Test') {
+    tools {
+        maven "maven-3.8"
+    }
+
+    stages {
+        stage('Test') {
             steps {
-                sh 'mvn test'
+                // Get some code from a GitHub repository
+               git branch: 'riadh', url: 'https://github.com/CodeWizards007/devops-API.git'
+
+                // Run Maven tests.
+                sh "mvn test"
+
+                
+            }
+        }
+        stage('Build'){
+            steps {
               
+                // Maven build .
+                sh "mvn clean install -Dmaven.test.skip=true"
+                
             }
         }
-         stage ('Build') {
-            steps {
-           
-                sh 'mvn clean install'
-            }
-        }
+          
     }
 }
+      

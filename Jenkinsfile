@@ -17,7 +17,9 @@ pipeline {
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexus-user-credentials" // 3malt credentials f jenkins w 3aythomlhom houni for security reasons 
     } 
-    stage("Increment version")
+       
+    stages {
+         stage("Increment version")
         {
             steps{
                 script{
@@ -30,7 +32,6 @@ pipeline {
             }          
             }
         }
-    stages {
         stage("sonarqube analysis")
         {
            steps{

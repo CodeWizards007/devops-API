@@ -40,7 +40,7 @@ pipeline {
                         sh 'git config --global user.email "jenkins@exemple.com"'
                         sh 'git config --global user.name "jenkins"'
                         sh 'git config --list'
-                        sh 'git remote set-url origin  https://${USERNAME}:${PASSWORD}@github.com/hamdinh98/maven-java-app'
+                        sh 'git remote set-url origin  https://${USERNAME}:${PASSWORD}@github.com/CodeWizards007/devops-API'
                         sh 'git add .'
                         sh 'git commit -m "update project version"'
                         sh 'git branch'

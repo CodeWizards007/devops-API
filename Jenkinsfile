@@ -37,10 +37,9 @@ pipeline {
         {
             steps{
                 script{
-
                     nexusArtifactUploader artifacts: 
                     [[artifactId: 'achat', classifier: '', 
-                    file: 'target/achat-1.0.0-SNAPSHOT.jar', type: 'jar']], 
+                    file: 'target/achat-1.0.0.jar', type: 'jar']], 
                     credentialsId: 'jenkins-nexus-auth', groupId: 'tn.esprit.rh', 
                     nexusUrl: '20.150.204.104/nexus', 
                     nexusVersion: 'nexus2', 

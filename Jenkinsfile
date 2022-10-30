@@ -11,7 +11,7 @@ pipeline {
                 // Get some code from a GitHub repository
                git branch: 'riadh', url: 'https://github.com/CodeWizards007/devops-API.git'
 
-                // Run Maven tests.
+                
                 sh "mvn test"
 
                 

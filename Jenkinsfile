@@ -17,7 +17,19 @@ pipeline {
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexus-user-credentials" // 3malt credentials f jenkins w 3aythomlhom houni for security reasons 
     } 
-
+    stage("Increment version")
+        {
+            steps{
+                script{
+                sh 'mvn build-helper:parse-version versions:set\
+                    -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
+                    versions:commit'
+                def matcher =  readFile('pom.xml')=~'<version>(.+)</version>'
+                def version = matcher[0][1]
+                env.IMAGE_NAME= "$version"
+            }          
+            }
+        }
     stages {
         stage("sonarqube analysis")
         {
@@ -43,7 +55,15 @@ pipeline {
         stage("build poject")
         {
             steps{
-                sh "mvn clean package"
+                echo 'building maven project'
+                buildJar()
+            }
+        }
+        stage('Unit test')
+        {
+            steps{
+                echo " testing the app .."
+                sh "mvn test"
             }
         }
       stage("Publish to Nexus") {

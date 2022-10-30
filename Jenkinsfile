@@ -16,6 +16,9 @@ pipeline {
         NEXUS_REPOSITORY = "maven-app"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexus-user-credentials" // 3malt credentials f jenkins w 3aythomlhom houni for security reasons
+
+        DOCKERHUB_USERNAME ="hamdinh98"
+        DOCKERHUB_REPO = "images-repo"
     } 
        
     stages {
@@ -90,7 +93,7 @@ pipeline {
         {
             steps{
                echo "building docker images"
-                buildImage("hamdinh98/images-repo:maven-${IMAGE_NAME}")
+                buildImage("${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME}")
             }
         }
         stage("pushing docker image to dockerhub")
@@ -101,7 +104,7 @@ pipeline {
                echo "login to dockerhub images repos"
                sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
                echo "push the images to dockerhub"
-               sh "docker push hamdinh98/images-repo:maven-${IMAGE_NAME}"
+               sh "docker push ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME}"
               }    
         }           
         }

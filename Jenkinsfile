@@ -19,7 +19,7 @@ pipeline {
     } 
        
     stages {
-         stage("Increment version")
+        stage("Increment version")
         {
             steps{
                 script{
@@ -30,6 +30,23 @@ pipeline {
                 def version = matcher[0][1]
                 env.IMAGE_NAME= "$version"
             }          
+            }
+        }
+         stage("commit version update")
+        {
+            steps{
+                script{
+                    withCredentials([usernamePassword(credentialsId: 'jenkins-github-auth', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh 'git config --global user.email "jenkins@exemple.com"'
+                        sh 'git config --global user.name "jenkins"'
+                        sh 'git config --list'
+                        sh 'git remote set-url origin  https://${USERNAME}:${PASSWORD}@github.com/hamdinh98/maven-java-app'
+                        sh 'git add .'
+                        sh 'git commit -m "update project version"'
+                        sh 'git branch'
+                        sh 'git push -o ci.skip origin HEAD:master '
+                    }
+                }
             }
         }
         stage("sonarqube analysis")

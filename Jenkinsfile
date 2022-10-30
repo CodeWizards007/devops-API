@@ -26,15 +26,16 @@ pipeline {
             }
         }
         
-         stage('Static Tests'){
-            steps {
-              
-                // Sonar test .
-               withSonarQubeEnv(credentialsId: 'sonar_auth') {
+        stage("sonarqube analysis")
+        {
+           steps{
+             script{
+                withSonarQubeEnv(credentialsId: 'sonar_auth')
+                {
                     sh 'mvn clean package sonar:sonar'
                 }
-                
-            }
+             }
+           }
         }
           
     }

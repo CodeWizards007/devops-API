@@ -30,7 +30,7 @@ pipeline {
         {
            steps{
              script{
-                withSonarQubeEnv(credentialsId: 'sonar_auth')
+                withSonarQubeEnv(credentialsId: 'sonar-api')
                 {
                     sh 'mvn clean package sonar:sonar'
                 }
@@ -43,7 +43,7 @@ pipeline {
            steps{
              script{
                  
-               waitForQualityGate abortPipeline: false, credentialsId: 'sonar_auth'
+               waitForQualityGate abortPipeline: false, credentialsId: 'sonar-api'
               
              }
            }

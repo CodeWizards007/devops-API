@@ -184,7 +184,7 @@ pipeline {
         stage("Email notification")
         {
         steps{
-                emailext attachLog: true, body: 'This[is the extended email test'. ,subject: 'This is the extended email test', to:"hamdi.nahdi@esprit.tn";
+                emailext attachLog: true, body: 'This[is the extended email test'.,subject: 'This is the extended email test', to:"hamdi.nahdi@esprit.tn"
         }
         }
     }   

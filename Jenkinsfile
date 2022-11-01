@@ -48,6 +48,28 @@ pipeline {
              }
            }
         }
+        
+        stage("publish the jar to nexus repo")
+        {
+           steps{
+             script{
+                 nexusArtifactUploader artifacts: [
+                     [artifactId: 'achat',
+                      classifier: '',
+                      file: 'target/achat.jar',
+                      type: 'jar']],
+                     credentialsId: 'nexus-auth',
+                     groupId: 'tn.esprit.rh',
+                     nexusUrl: '192.168.1.34:8081',
+                     nexusVersion: 'nexus3',
+                     protocol: 'http',
+                     repository: 'SpringAppRelease',
+                     version: '1.0'
+              
+             }
+           }
+        }
+        
           
     }
 }

@@ -181,11 +181,13 @@ pipeline {
                 }
             }
         }
-         stage("Email notification")
+        stage("Email notification")
         {
         steps{
+            
             script{
-               mail bcc: '', body: '${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}:  Check console output at ${BUILD_URL} to view the results.', cc: '', from: '', replyTo: '', subject: 'Pipeline report', to: 'hamdi.nahdi@esprit.tn'
+                echo "sending email ... ${PROJECT_NAME}"
+               mail bcc: '', body: "${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}:  Check console output at ${BUILD_URL} to view the results.", cc: '', from: '', replyTo: '', subject: 'Pipeline report', to: 'hamdi.nahdi@esprit.tn'
             }
         }
         }

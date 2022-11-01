@@ -57,6 +57,10 @@ pipeline {
         }
         stage("sonarqube analysis")
         {
+            when{
+             expression{
+             branch "master"
+             }
            steps{
              script{
                 withSonarQubeEnv(credentialsId: 'jenkins-auth')
@@ -68,6 +72,10 @@ pipeline {
         }
         stage("Quality status")
         {
+            when{
+             expression{
+             branch "master"
+             }
            steps{
              script{
                 waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-auth'
@@ -93,6 +101,10 @@ pipeline {
 
         stage("build docker image")
         {
+             when{
+             expression{
+             branch "master"
+             }
             steps{
                echo "building docker images"
                 buildImage("${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME}")
@@ -100,6 +112,10 @@ pipeline {
         }
         stage("pushing docker image to dockerhub")
         {
+             when{
+             expression{
+             branch "master"
+             }
          steps{
          echo "pushing docker images ... "
             withCredentials([usernamePassword(credentialsId: 'docker-hub-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
@@ -110,7 +126,11 @@ pipeline {
               }    
         }           
         }
-      stage("Publish to Nexus") {
+    stage("Publish to Nexus") {
+         when{
+             expression{
+             branch "master"
+             }
             steps {
                 script {
                     // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
@@ -155,6 +175,16 @@ pipeline {
                         error "*** File: \${artifactPath}, could not be found";
                     }
                 }
+            }
+        }
+    }
+
+    stage("Email notification")
+    {
+        steps{
+            script{
+                emailext body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS: 
+                Check console output at $BUILD_URL to view the results.''', recipientProviders: [developers("hamdinahdi2@gmail.com")], subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!'
             }
         }
     }

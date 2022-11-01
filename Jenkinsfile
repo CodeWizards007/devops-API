@@ -21,7 +21,6 @@ pipeline {
         DOCKERHUB_USERNAME ="hamdinh98"
         DOCKERHUB_REPO = "images-repo"
     } 
-       
     stages {
         stage("Increment version")
         {

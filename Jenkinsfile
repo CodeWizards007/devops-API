@@ -128,7 +128,7 @@ pipeline {
               }    
         }           
         }
-    stage("Publish to Nexus") {
+        stage("Publish to Nexus") {
          when{
              expression{
              branch "master"
@@ -180,16 +180,13 @@ pipeline {
                 }
             }
         }
-    stage("Email notification")
-    {
+         stage("Email notification")
+        {
         steps{
             script{
-                emailext body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS: 
-                Check console output at $BUILD_URL to view the results.''', recipientProviders: [developers("hamdinahdi2@gmail.com")], subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!'
+               mail bcc: '', body: '\'\'\'$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:  Check console output at $BUILD_URL to view the results.\'\'\'', cc: '', from: '', replyTo: '', subject: 'Pipeline report', to: 'hamdi.nahdi@esprit.tn'
             }
         }
-    }
-    }
-
-    
+        }
+    }   
 }

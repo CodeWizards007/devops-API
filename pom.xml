@@ -109,7 +109,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<finalName>achat<finalName/>
+		<finalName>achat</finalName>
 	</build>
 
 </project>

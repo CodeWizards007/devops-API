@@ -184,8 +184,8 @@ pipeline {
         stage("Email notification")
         {
         steps{
-                echo "sending email ... ${PROJECT_NAME}"
-               mail bcc: '', body: "${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}:  Check console output at ${BUILD_URL} to view the results.", cc: '', from: '', replyTo: '', subject: 'Pipeline report', to: 'hamdi.nahdi@esprit.tn'
+                emailext attachLog: true, body: 'This[is the extended email test'. subject: 'This is the extended email test', to:"hamdi.nahdi@esprit.tn"
+
         }
         }
     }   

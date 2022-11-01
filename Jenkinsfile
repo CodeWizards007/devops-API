@@ -182,8 +182,6 @@ pipeline {
                 }
             }
         }
-    }
-
     stage("Email notification")
     {
         steps{
@@ -193,4 +191,7 @@ pipeline {
             }
         }
     }
+    }
+
+    
 }

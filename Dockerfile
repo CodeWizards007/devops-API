@@ -8,4 +8,7 @@ COPY ./target/achat-*.jar /usr/app/
 WORKDIR /usr/app
 
 
+
+
+
 CMD java -jar achat-*.jar

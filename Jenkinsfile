@@ -61,6 +61,7 @@ pipeline {
              expression{
              branch "master"
              }
+            }
            steps{
              script{
                 withSonarQubeEnv(credentialsId: 'jenkins-auth')
@@ -76,6 +77,7 @@ pipeline {
              expression{
              branch "master"
              }
+            }
            steps{
              script{
                 waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-auth'
@@ -105,6 +107,7 @@ pipeline {
              expression{
              branch "master"
              }
+             }
             steps{
                echo "building docker images"
                 buildImage("${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME}")
@@ -115,6 +118,7 @@ pipeline {
              when{
              expression{
              branch "master"
+             }
              }
          steps{
          echo "pushing docker images ... "
@@ -131,6 +135,7 @@ pipeline {
              expression{
              branch "master"
              }
+            }
             steps {
                 script {
                     // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps

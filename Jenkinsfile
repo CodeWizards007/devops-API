@@ -69,6 +69,7 @@ pipeline {
              }
            }
         }
+        
         stage("Quality status")
         {
             when{

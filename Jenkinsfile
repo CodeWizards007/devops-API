@@ -69,7 +69,17 @@ pipeline {
              }
            }
         }
-        
+        stage('Build docker image '){
+            steps {
+
+                echo "Build a docker image"
+              
+                sh "docker build -t springAPI:lts ."
+                sh "docker images"
+
+                
+            }
+        }
           
     }
 }

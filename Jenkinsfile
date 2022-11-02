@@ -74,7 +74,7 @@ pipeline {
 
                 echo "Build a docker image"
               
-                sh "docker build -t springAPI:lts ."
+                sh "docker build -t spring:lts ."
                 sh "docker images"
 
                 

@@ -15,7 +15,7 @@ services:
   app:
     depends_on:
       - mysqldb
-    image: spring.lts
+    image: spring:lts
     restart: on-failure
     env_file: ./.env
     ports:

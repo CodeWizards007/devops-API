@@ -80,6 +80,17 @@ pipeline {
                 
             }
         }
+
+        stage('Deploy on docker compose '){
+            steps {
+
+                echo "Deploying"
+              
+                sh "docker-compose up -d"
+                
+             
+            }
+        }
           
     }
 }

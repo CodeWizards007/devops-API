@@ -102,24 +102,26 @@ pipeline {
 
         stage("build docker image")
         {
-             when{
+             
+            steps{
+                when{
              expression{
              branch "master"
              }
              }
-            steps{
                echo "building docker images"
                 buildImage("${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME}")
             }
         }
         stage("pushing docker image to dockerhub")
         {
+            
+         steps{
              when{
              expression{
              branch "master"
              }
              }
-         steps{
          echo "pushing docker images ... "
             withCredentials([usernamePassword(credentialsId: 'docker-hub-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                echo "login to dockerhub images repos"
@@ -130,12 +132,9 @@ pipeline {
         }           
         }
         stage("Publish to Nexus") {
-         when{
-             expression{
-             branch "master"
-             }
-            }
+         when { equals expected: true, actual: "Publish to Nexus" }
             steps {
+            }
                 script {
                     // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
                     def pom = readMavenPom file: 'pom.xml';
@@ -185,7 +184,7 @@ pipeline {
         {
         steps{
             echo "${BUILD_URL}"
-            mail bcc: '', body: "Check console output at ${env.BUILD_URL} to view the results.", cc: '', from: '', replyTo: '', subject: "${env.PROJECT_NAME} - Build # ${env.BUILD_NUMBER} - ${env.BUILD_STATUS}:", to: 'hamdi.nahdi@esprit.tn,saifeddine.houji@esprit.tn,riadh.yahyaoui@esprit.tn,tarek.zaafrane@esprit.tn ,teymour.dridi@esprit.tn '
+            mail bcc: '', body: "Check console output at ${env.BUILD_URL}consoleText to view the results.", cc: '', from: '', replyTo: '', subject: "${env.BRANCH_NAME} - Build # ${ENVBUILD_TAG}", to: 'hamdi.nahdi@esprit.tn,saifeddine.houji@esprit.tn,riadh.yahyaoui@esprit.tn,tarek.zaafrane@esprit.tn ,teymour.dridi@esprit.tn '
            
         }
     }

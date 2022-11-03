@@ -1,6 +1,4 @@
 @Library('jenkins-shared-library')_
-
-
 pipeline {
     agent any
     tools{
@@ -95,11 +93,10 @@ pipeline {
         {
             
             steps{
-            
-             }
-               echo "building docker images"
+             echo "building docker images"
                 buildImage("${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME}")
             }
+              
         }
         stage("pushing docker image to dockerhub")
         {
@@ -117,7 +114,6 @@ pipeline {
         stage("Publish to Nexus") {
               
             steps {
-            }
                 script {
                     // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
                     def pom = readMavenPom file: 'pom.xml';
@@ -170,6 +166,8 @@ pipeline {
             mail bcc: '', body: "Check console output at ${env.BUILD_URL}consoleText to view the results.", cc: '', from: '', replyTo: '', subject: "${env.BRANCH_NAME} - Build # ${ENVBUILD_TAG}", to: 'hamdi.nahdi@esprit.tn,saifeddine.houji@esprit.tn,riadh.yahyaoui@esprit.tn,tarek.zaafrane@esprit.tn ,teymour.dridi@esprit.tn '
            
         }
+        }
     }
-}   
+}
+
 

@@ -23,10 +23,6 @@ pipeline {
     stages {
         stage("Increment version")
         {
-                when{
-             expression{
-             env.BRANCH_NAME="master"
-             }
             steps{
                 script{
                 sh 'mvn build-helper:parse-version versions:set\
@@ -41,10 +37,6 @@ pipeline {
         }
          stage("commit version update")
         {
-                when{
-             expression{
-             BRANCH_NAME "master"
-             }
             steps{
                 script{
                     withCredentials([usernamePassword(credentialsId: 'jenkins-github-auth', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
@@ -63,10 +55,7 @@ pipeline {
         }
         stage("sonarqube analysis")
         {
-               when{
-             expression{
-             BRANCH_NAME "master"
-             }
+             
            steps{
              script{
                 withSonarQubeEnv(credentialsId: 'jenkins-auth')
@@ -78,12 +67,7 @@ pipeline {
         }
 
         stage("Quality status")
-        {
-                when{
-             expression{
-             BRANCH_NAME "master"
-             }
-          
+        { 
            steps{
              script{
                 waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-auth'
@@ -94,10 +78,6 @@ pipeline {
 
         stage("build poject")
         {
-                when{
-             expression{
-             BRANCH_NAME "master"
-             }
             steps{
                 echo 'building maven project'
                 buildJar()
@@ -105,10 +85,6 @@ pipeline {
         }
         stage('Unit test')
         {
-                when{
-             expression{
-             BRANCH_NAME "master"
-             }
             steps{
                 echo " testing the app .."
                 sh "mvn test"
@@ -117,10 +93,7 @@ pipeline {
 
         stage("build docker image")
         {
-            when{
-             expression{
-             BRANCH_NAME "master"
-             }  
+            
             steps{
             
              }
@@ -130,10 +103,7 @@ pipeline {
         }
         stage("pushing docker image to dockerhub")
         {
-                when{
-             expression{
-             BRANCH_NAME "master"
-             }
+              
          steps{
          echo "pushing docker images ... "
             withCredentials([usernamePassword(credentialsId: 'docker-hub-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
@@ -145,10 +115,7 @@ pipeline {
         }           
         }
         stage("Publish to Nexus") {
-               when{
-             expression{
-             BRANCH_NAME "master"
-             }
+              
             steps {
             }
                 script {

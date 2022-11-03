@@ -3,6 +3,7 @@ pipeline {
     agent any
     tools{
     maven "maven"
+        
     }
     environment {
         // This can be nexus3 or nexus2

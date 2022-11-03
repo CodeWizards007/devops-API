@@ -24,7 +24,7 @@ pipeline {
         {
             steps{
                 script{
-                sh 'mvn build-helper:parse-version versions:set\
+                sh 'mvn -Dmaven.test.skip=true build-helper:parse-version versions:set\
                     -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
                     versions:commit'
                 def matcher =  readFile('pom.xml')=~'<version>(.+)</version>'
@@ -59,7 +59,7 @@ pipeline {
              script{
                 withSonarQubeEnv(credentialsId: 'jenkins-auth')
                 {
-                    sh 'mvn clean package sonar:sonar'
+                    sh 'mvn -Dmaven.test.skip=true clean package sonar:sonar'
                 }
              }
            }

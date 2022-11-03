@@ -97,6 +97,7 @@ pipeline {
              echo "building docker images"
                 buildImage("${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME}")
             }
+            
               
         }
         stage("pushing docker image to dockerhub")

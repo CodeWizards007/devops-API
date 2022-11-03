@@ -2,9 +2,9 @@ FROM openjdk:8-jre-alpine
 
 EXPOSE 8089
 
+COPY ./target/achat-*.jar /usr/app/
 
 
-COPY ./target/java-maven-app-*.jar /usr/app/
 WORKDIR /usr/app
 
-CMD java -jar java-maven-app-*.jar
+CMD java -jar achat-*.jar

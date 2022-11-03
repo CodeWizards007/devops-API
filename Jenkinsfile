@@ -184,7 +184,7 @@ pipeline {
         stage("Email notification")
         {
         steps{
-                emailext attachLog: true, body: 'Please check the report document below.',subject: 'Pipeline report', to:"hamdi.nahdi@esprit.tn"
+                emailext attachLog: true, body: 'Please check the report document below.',subject: 'Pipeline report', to:"hamdi.nahdi@esprit.tn,hamdinahdi2@gmail.com"
         }
         }
     }   

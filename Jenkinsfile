@@ -184,8 +184,8 @@ pipeline {
         stage("Email notification")
         {
         steps{
-            mail bcc: '', body: '''
-         Check console output at ${BUILD_URL} to view the results.''', cc: 'saifeddine.houji@esprit.tn,riadh.yahyaoui@esprit.tn,tarek.zaafrane@esprit.tn ,teymour.dridi@esprit.tn ', from: '', replyTo: '', subject: '${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}:', to: 'hamdi.nahdi@esprit.tn'
+           mail bcc: '', body: '''
+Check console output at ${BUILD_URL} to view the results.''', cc: '', from: '', replyTo: '', subject: '${PROJECT_NAME} - Build # ${BUILD_NUMBER} - ${BUILD_STATUS}:', to: 'hamdi.nahdi@esprit.tn,saifeddine.houji@esprit.tn,riadh.yahyaoui@esprit.tn,tarek.zaafrane@esprit.tn ,teymour.dridi@esprit.tn '
         }
     }
 }   

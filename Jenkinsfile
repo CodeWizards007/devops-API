@@ -18,6 +18,7 @@ pipeline {
         NEXUS_CREDENTIAL_ID = "nexus-user-credentials" // 3malt credentials f jenkins w 3aythomlhom houni for security reasons
         DOCKERHUB_USERNAME ="hamdinh98"
         DOCKERHUB_REPO = "images-repo"
+        TARGET_BRANCH = "master" // hedi tetbadel selon el branch eli bech truni aleha script
     } 
     stages {
         stage("Increment version")
@@ -45,9 +46,9 @@ pipeline {
                         sh 'git remote set-url origin  https://${USERNAME}:${PASSWORD}@github.com/CodeWizards007/devops-API'
                         sh 'git add .'
                         sh 'git commit -m "update project version"'
-                        sh 'git pull origin hamdi'
+                        sh 'git pull origin ${TARGET_BRANCH}'
                         sh 'git branch'
-                        sh 'git push origin HEAD:hamdi'
+                        sh 'git push origin HEAD:${TARGET_BRANCH}'
                     }
                 }
             }

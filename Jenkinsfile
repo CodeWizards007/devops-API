@@ -73,8 +73,7 @@ pipeline {
             steps {
 
                 echo "Build a docker image"
-              
-                sh "docker build -t spring:lts ."
+                sh "docker build -t app . "
                 sh "docker images"
 
                 

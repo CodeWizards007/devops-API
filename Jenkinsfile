@@ -86,7 +86,6 @@ pipeline {
                 echo "Deploying"
               
                 sh "docker-compose rm -f"
-                 sh "docker-compose pull"
                 sh "docker-compose up --build -d"
         
                 

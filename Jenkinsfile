@@ -85,7 +85,7 @@ pipeline {
 
                 echo "Deploying"
               
-                sh "docker-compose up -d"
+                sh "docker-compose build --no-cache -d"
                 
              
             }

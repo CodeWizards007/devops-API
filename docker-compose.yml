@@ -1,0 +1,28 @@
+version: "3"
+services:
+  mysqldb:
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=achat
+    ports:
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
+  app:
+    depends_on:
+      - mysqldb
+    image: ${image}
+    restart: on-failure
+    ports:
+      - "8089:8089"
+    environment:
+    
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url"  : "jdbc:mysql://mysqldb:3306/achat?useSSL=false",
+        "spring.datasource.username" : "root",
+        "spring.datasource.password" : "root"
+      }'
+volumes:
+  db:

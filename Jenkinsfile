@@ -6,7 +6,10 @@ pipeline {
     stages {
         stage("show env vars")
         {
+            steps{
+
             sh "env"
+            }
          
         }
        

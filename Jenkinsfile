@@ -164,7 +164,8 @@ pipeline {
         stage("run app with docker-compose")
         {
             steps{
-                sh "IMAGE_NAME=${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME} docker-compose up" 
+                sh "docker-compose down"
+                sh "IMAGE_NAME=${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME} docker-compose -d up" 
             }
         }
         stage("Email notification")

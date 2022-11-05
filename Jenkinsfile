@@ -73,7 +73,7 @@ pipeline {
             steps {
 
                 echo "Build a docker image"
-                sh "docker build -t app . "
+                sh "docker build -t spring . "
                 sh "docker images"
 
                 
@@ -85,8 +85,7 @@ pipeline {
 
                 echo "Deploying"
               
-                sh "docker-compose rm -f"
-                sh "docker-compose up --build -d"
+                sh "docker-compose up -d"
         
                 
              

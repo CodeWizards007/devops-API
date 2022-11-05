@@ -161,6 +161,12 @@ pipeline {
                 }
             }
         }
+        stage("run app with docker-compose")
+        {
+            steps{
+                sh "export IMAGE_NAME=${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME} docker-compose up" 
+            }
+        }
         stage("Email notification")
         {
         steps{

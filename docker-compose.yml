@@ -5,10 +5,10 @@ services:
     image: mysql:5.7
     restart: always
     environment:
-       MYSQL_ROOT_PASSWORD: riadh
+       MYSQL_ROOT_PASSWORD: root
        MYSQL_DATABASE: achat
-       MYSQL_USER: riadh
-       MYSQL_PASSWORD: riadh
+       MYSQL_USER: root
+       MYSQL_PASSWORD: root
     ports:
       - "3306:3306"
     volumes:

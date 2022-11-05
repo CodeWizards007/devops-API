@@ -9,6 +9,7 @@ pipeline {
             steps{
 
             sh "env"
+            sh "pwd"
             }
          
         }

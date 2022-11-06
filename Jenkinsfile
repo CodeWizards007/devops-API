@@ -2,7 +2,7 @@
 pipeline {
     agent any
     tools{
-    maven "maven"
+    maven "maven" 
     }
     
     environment {
@@ -16,17 +16,16 @@ pipeline {
         NEXUS_REPOSITORY = "maven-app"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexus-user-credentials" // 3malt credentials f jenkins w 3aythomlhom houni for security reasons
-
         DOCKERHUB_USERNAME ="hamdinh98"
         DOCKERHUB_REPO = "images-repo"
+        TARGET_BRANCH = "master" // hedi tetbadel selon el branch eli bech truni aleha script
     } 
-       
     stages {
         stage("Increment version")
         {
             steps{
                 script{
-                sh 'mvn build-helper:parse-version versions:set\
+                sh 'mvn -Dmaven.test.skip=true build-helper:parse-version versions:set\
                     -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
                     versions:commit'
                 def matcher =  readFile('pom.xml')=~'<version>(.+)</version>'
@@ -47,26 +46,28 @@ pipeline {
                         sh 'git remote set-url origin  https://${USERNAME}:${PASSWORD}@github.com/CodeWizards007/devops-API'
                         sh 'git add .'
                         sh 'git commit -m "update project version"'
-                        sh 'git pull origin hamdi'
+                        sh 'git pull origin ${TARGET_BRANCH}'
                         sh 'git branch'
-                        sh 'git push origin HEAD:hamdi'
+                        sh 'git push origin HEAD:${TARGET_BRANCH}'
                     }
                 }
             }
         }
         stage("sonarqube analysis")
         {
+             
            steps{
              script{
                 withSonarQubeEnv(credentialsId: 'jenkins-auth')
                 {
-                    sh 'mvn clean package sonar:sonar'
+                    sh 'mvn -Dmaven.test.skip=true clean package sonar:sonar'
                 }
              }
            }
         }
+
         stage("Quality status")
-        {
+        { 
            steps{
              script{
                 waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-auth'
@@ -92,13 +93,19 @@ pipeline {
 
         stage("build docker image")
         {
+            
             steps{
-               echo "building docker images"
+                echo "building docker images"
+                sh "docker image prune"
+                sh "docker container prune"
                 buildImage("${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME}")
             }
+            
+              
         }
         stage("pushing docker image to dockerhub")
         {
+              
          steps{
          echo "pushing docker images ... "
             withCredentials([usernamePassword(credentialsId: 'docker-hub-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
@@ -109,7 +116,8 @@ pipeline {
               }    
         }           
         }
-      stage("Publish to Nexus") {
+        stage("Publish to Nexus") {
+              
             steps {
                 script {
                     // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
@@ -156,5 +164,25 @@ pipeline {
                 }
             }
         }
+        stage("run app with docker-compose")
+        {
+            steps{
+                sh "docker-compose down"
+                sh "IMAGE_NAME=${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME} docker-compose up -d" 
+            }
+        }
+        stage("Email notification")
+        {
+        steps{
+            echo "${BUILD_URL}"
+            mail bcc: '', body: "Check console output at ${env.BUILD_URL}consoleText to view the results.", cc: '', from: '', replyTo: '', subject: "${env.BRANCH_NAME} - Build # ${env.BUILD_TAG}", to: 'hamdi.nahdi@esprit.tn,saifeddine.houji@esprit.tn,riadh.yahyaoui@esprit.tn,tarek.zaafrane@esprit.tn ,teymour.dridi@esprit.tn '
+           
+        }
+        }
     }
 }
+
+
+
+
+

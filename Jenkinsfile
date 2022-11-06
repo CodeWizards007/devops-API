@@ -2,9 +2,9 @@
 pipeline {
     agent any
     tools{
-    maven "maven"
-        
+    maven "maven" 
     }
+    
     environment {
         // This can be nexus3 or nexus2
         NEXUS_VERSION = "nexus2"
@@ -25,7 +25,7 @@ pipeline {
         {
             steps{
                 script{
-                sh 'mvn build-helper:parse-version versions:set\
+                sh 'mvn -Dmaven.test.skip=true build-helper:parse-version versions:set\
                     -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
                     versions:commit'
                 def matcher =  readFile('pom.xml')=~'<version>(.+)</version>'
@@ -60,7 +60,7 @@ pipeline {
              script{
                 withSonarQubeEnv(credentialsId: 'jenkins-auth')
                 {
-                    sh 'mvn clean package sonar:sonar'
+                    sh 'mvn -Dmaven.test.skip=true clean package sonar:sonar'
                 }
              }
            }
@@ -95,7 +95,8 @@ pipeline {
         {
             
             steps{
-             echo "building docker images"
+                echo "building docker images"
+                sh "docker image prune"
                 buildImage("${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME}")
             }
             
@@ -160,6 +161,13 @@ pipeline {
                         error "*** File: \${artifactPath}, could not be found";
                     }
                 }
+            }
+        }
+        stage("run app with docker-compose")
+        {
+            steps{
+                sh "docker-compose down"
+                sh "IMAGE_NAME=${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME} docker-compose up -d" 
             }
         }
         stage("Email notification")

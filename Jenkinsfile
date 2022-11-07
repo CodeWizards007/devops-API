@@ -49,6 +49,7 @@ pipeline {
                         sh 'git commit -m "update project version"'
                         sh 'git pull origin ${TARGET_BRANCH}'
                         sh 'git branch'
+                        
                         sh 'git push origin HEAD:${TARGET_BRANCH}'
                     }
                 }

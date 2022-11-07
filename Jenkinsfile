@@ -40,6 +40,7 @@ pipeline {
             steps{
                 script{
                     withCredentials([usernamePassword(credentialsId: 'jenkins-github-auth', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh 'pwd'
                         sh 'git config --global user.email "jenkins@exemple.com"'
                         sh 'git config --global user.name "jenkins"'
                         sh 'git config --list'

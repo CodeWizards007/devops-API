@@ -2,9 +2,9 @@
 pipeline {
     agent any
     tools{
-    maven "maven"
+    maven "maven" 
     }
-
+    
     environment {
         // This can be nexus3 or nexus2
         NEXUS_VERSION = "nexus2"
@@ -19,7 +19,7 @@ pipeline {
         DOCKERHUB_USERNAME ="hamdinh98"
         DOCKERHUB_REPO = "images-repo"
         TARGET_BRANCH = "hamdi" // hedi tetbadel selon el branch eli bech truni aleha script
-    }
+    } 
     stages {
         stage("Increment version")
         {
@@ -32,7 +32,7 @@ pipeline {
                 def version = matcher[1][1]
                 echo "${version}"
                 env.IMAGE_NAME= "$version"
-            }
+            }          
             }
         }
          stage("commit version update")
@@ -55,7 +55,7 @@ pipeline {
         }
         stage("sonarqube analysis")
         {
-
+             
            steps{
              script{
                 withSonarQubeEnv(credentialsId: 'jenkins-auth')
@@ -67,14 +67,14 @@ pipeline {
         }
 
         stage("Quality status")
-        {
+        { 
            steps{
              script{
                 waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-auth'
              }
            }
         }
-
+        
 
         stage("build poject")
         {
@@ -93,18 +93,18 @@ pipeline {
 
         stage("build docker image")
         {
-
+            
             steps{
                 echo "building docker images"
                 sh "docker image prune"
                 buildImage("${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME}")
             }
-
-
+            
+              
         }
         stage("pushing docker image to dockerhub")
         {
-
+              
          steps{
          echo "pushing docker images ... "
             withCredentials([usernamePassword(credentialsId: 'docker-hub-login', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
@@ -112,11 +112,11 @@ pipeline {
                sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
                echo "push the images to dockerhub"
                sh "docker push ${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME}"
-              }
-        }
+              }    
+        }           
         }
         stage("Publish to Nexus") {
-
+              
             steps {
                 script {
                     // Read POM xml file using 'readMavenPom' step , this step 'readMavenPom' is included in: https://plugins.jenkins.io/pipeline-utility-steps
@@ -167,7 +167,7 @@ pipeline {
         {
             steps{
                 sh "docker-compose down"
-                sh "IMAGE_NAME=${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME} docker-compose up -d"
+                sh "IMAGE_NAME=${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME} docker-compose up -d" 
             }
         }
         stage("Email notification")
@@ -175,7 +175,7 @@ pipeline {
         steps{
             echo "${BUILD_URL}"
             mail bcc: '', body: "Check console output at ${env.BUILD_URL}consoleText to view the results.", cc: '', from: '', replyTo: '', subject: "${env.BRANCH_NAME} - Build # ${env.BUILD_TAG}", to: 'hamdi.nahdi@esprit.tn,saifeddine.houji@esprit.tn,riadh.yahyaoui@esprit.tn,tarek.zaafrane@esprit.tn ,teymour.dridi@esprit.tn '
-
+           
         }
         }
     }

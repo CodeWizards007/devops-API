@@ -55,6 +55,21 @@ pipeline {
                 }
             }
         }
+
+         stage("build poject")
+        {
+            steps{
+                echo 'building maven project'
+                buildJar()
+            }
+        }
+        stage('Unit test')
+        {
+            steps{
+                echo " testing the app .."
+                sh "mvn test"
+            }
+        }
         stage("sonarqube analysis")
         {
              
@@ -78,20 +93,7 @@ pipeline {
         }
         
 
-        stage("build poject")
-        {
-            steps{
-                echo 'building maven project'
-                buildJar()
-            }
-        }
-        stage('Unit test')
-        {
-            steps{
-                echo " testing the app .."
-                sh "mvn test"
-            }
-        }
+       
 
         stage("build docker image")
         {

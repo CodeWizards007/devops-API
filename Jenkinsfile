@@ -55,28 +55,6 @@ pipeline {
                 }
             }
         }
-        stage("sonarqube analysis")
-        {
-             
-           steps{
-             script{
-                withSonarQubeEnv(credentialsId: 'jenkins-auth')
-                {
-                    sh 'mvn -Dmaven.test.skip=true clean package sonar:sonar'
-                }
-             }
-           }
-        }
-
-        stage("Quality status")
-        { 
-           steps{
-             script{
-                waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-auth'
-             }
-           }
-        }
-        
 
         stage("build poject")
         {

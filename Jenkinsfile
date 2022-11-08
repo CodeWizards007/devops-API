@@ -55,7 +55,18 @@ pipeline {
                 }
             }
         }
-
+        stage("sonarqube analysis")
+        {
+             
+           steps{
+             script{
+                withSonarQubeEnv(credentialsId: 'jenkins-auth')
+                {
+                    sh 'mvn -Dmaven.test.skip=true clean package sonar:sonar'
+                }
+             }
+           }
+        }
         stage("build poject")
         {
             steps{
@@ -77,6 +88,7 @@ pipeline {
             steps{
                 echo "building docker images"
                 sh "docker image prune"
+                sh "docker container prune"
                 buildImage("${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME}")
             }
         }

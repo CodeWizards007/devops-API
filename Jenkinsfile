@@ -72,7 +72,7 @@ pipeline {
         { 
            steps{
              script{
-                waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-auth'
+                waitForQualityGate abortPipeline: true, credentialsId: 'jenkins-auth'
              }
            }
         }

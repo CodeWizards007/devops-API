@@ -77,7 +77,7 @@ pipeline {
              script{
                 withSonarQubeEnv(credentialsId: 'sonar_credentials')
                 {
-                    sh 'mvn -Dmaven.test.skip=true clean package sonar:sonar'
+                    sh 'mvn clean package sonar:sonar'
                 }
                 
              }

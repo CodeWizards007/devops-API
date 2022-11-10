@@ -2,5 +2,12 @@ FROM openjdk:8-jre-alpine
 
 EXPOSE 8089
 
-ADD target/achat.jar achat.jar
-ENTRYPOINT ["java","-jar","/achat.jar"]
+
+COPY ./target/achat-*.jar /usr/app/
+
+
+WORKDIR /usr/app
+
+
+CMD java -jar achat-*.jar
+

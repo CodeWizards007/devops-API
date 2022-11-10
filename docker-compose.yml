@@ -7,7 +7,7 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=achat
     ports:
-      - "3306:3306"
+      - "3311:3306"
     volumes:
       - db:/var/lib/mysql
   app:
@@ -16,7 +16,7 @@ services:
     image: ${IMAGE_NAME}
     restart: on-failure
     ports:
-      - "8089:8089"
+      - "8095:8089"
     environment:
       SPRING_APPLICATION_JSON: '{
         "spring.datasource.url"  : "jdbc:mysql://mysqldb:3306/achat?useSSL=false",

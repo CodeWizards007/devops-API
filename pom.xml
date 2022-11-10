@@ -124,7 +124,7 @@
     </executions>
   </plugin>
 		</plugins>
-		<finalName>achat</finalName>
+		
 	</build>
 
 </project>

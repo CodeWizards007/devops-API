@@ -11,10 +11,10 @@ services:
     volumes:
       - db:/var/lib/mysql
   app:
+    container_name: mysqldb-hamdi
     depends_on:
       - mysqldb
     image: ${IMAGE_NAME}
-    container_name:"mysqldb-hamdi"
     restart: on-failure
     ports:
       - "8090:8089"

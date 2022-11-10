@@ -33,14 +33,12 @@ class StockRestControllerTest {
     @Autowired
     private StockRestController stockRestController;
 
-    /**
-     * Method under test: {@link StockRestController#retrieveStock(Long)}
-     */
+
     @Test
     void testRetrieveStock() throws Exception {
         Stock stock = new Stock();
         stock.setIdStock(1L);
-        stock.setLibelleStock("Libelle Stock");
+        stock.setLibelleStock("hhkj2jop8kp5j");
         stock.setProduits(new HashSet<>());
         stock.setQte(1);
         stock.setQteMin(1);
@@ -52,40 +50,36 @@ class StockRestControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("{\"idStock\":1,\"libelleStock\":\"Libelle Stock\",\"qte\":1,\"qteMin\":1}"));
+                        .string("{\"idStock\":1,\"libelleStock\":\"hhkj2jop8kp5j\",\"qte\":1,\"qteMin\":1}"));
     }
 
-    /**
-     * Method under test: {@link StockRestController#retrieveStock(Long)}
-     */
+
     @Test
     void testRetrieveStock2() throws Exception {
         Stock stock = new Stock();
         stock.setIdStock(1L);
-        stock.setLibelleStock("Libelle Stock");
+        stock.setLibelleStock("hhkj2jop8kp5j");
         stock.setProduits(new HashSet<>());
         stock.setQte(1);
         stock.setQteMin(1);
         when(this.iStockService.retrieveStock((Long) any())).thenReturn(stock);
         MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/stock/retrieve-stock/{stock-id}", 1L);
-        getResult.contentType("https://example.org/example");
+
         MockMvcBuilders.standaloneSetup(this.stockRestController)
                 .build()
                 .perform(getResult)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("{\"idStock\":1,\"libelleStock\":\"Libelle Stock\",\"qte\":1,\"qteMin\":1}"));
+                        .string("{\"idStock\":1,\"libelleStock\":\"hhkj2jop8kp5j\",\"qte\":1,\"qteMin\":1}"));
     }
 
-    /**
-     * Method under test: {@link StockRestController#addStock(Stock)}
-     */
+
     @Test
     void testAddStock() throws Exception {
         Stock stock = new Stock();
         stock.setIdStock(1L);
-        stock.setLibelleStock("Libelle Stock");
+        stock.setLibelleStock("hhkj2jop8kp5j");
         stock.setProduits(new HashSet<>());
         stock.setQte(1);
         stock.setQteMin(1);
@@ -93,7 +87,7 @@ class StockRestControllerTest {
 
         Stock stock1 = new Stock();
         stock1.setIdStock(1L);
-        stock1.setLibelleStock("Libelle Stock");
+        stock1.setLibelleStock("jlokj2jop8kp5j");
         stock1.setProduits(new HashSet<>());
         stock1.setQte(1);
         stock1.setQteMin(1);
@@ -107,12 +101,10 @@ class StockRestControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("{\"idStock\":1,\"libelleStock\":\"Libelle Stock\",\"qte\":1,\"qteMin\":1}"));
+                        .string("{\"idStock\":1,\"libelleStock\":\"hhkj2jop8kp5j\",\"qte\":1,\"qteMin\":1}"));
     }
 
-    /**
-     * Method under test: {@link StockRestController#getStocks()}
-     */
+
     @Test
     void testGetStocks() throws Exception {
         when(this.iStockService.retrieveAllStocks()).thenReturn(new ArrayList<>());
@@ -125,14 +117,12 @@ class StockRestControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 
-    /**
-     * Method under test: {@link StockRestController#getStocks()}
-     */
+
     @Test
     void testGetStocks2() throws Exception {
         when(this.iStockService.retrieveAllStocks()).thenReturn(new ArrayList<>());
         MockHttpServletRequestBuilder getResult = MockMvcRequestBuilders.get("/stock/retrieve-all-stocks");
-        getResult.contentType("https://example.org/example");
+
         MockMvcBuilders.standaloneSetup(this.stockRestController)
                 .build()
                 .perform(getResult)
@@ -141,14 +131,12 @@ class StockRestControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
 
-    /**
-     * Method under test: {@link StockRestController#modifyStock(Stock)}
-     */
+
     @Test
     void testModifyStock() throws Exception {
         Stock stock = new Stock();
         stock.setIdStock(1L);
-        stock.setLibelleStock("Libelle Stock");
+        stock.setLibelleStock("hhkj2jop8kp5j");
         stock.setProduits(new HashSet<>());
         stock.setQte(1);
         stock.setQteMin(1);
@@ -156,7 +144,7 @@ class StockRestControllerTest {
 
         Stock stock1 = new Stock();
         stock1.setIdStock(1L);
-        stock1.setLibelleStock("Libelle Stock");
+        stock1.setLibelleStock("hhkj2jop8kp5j");
         stock1.setProduits(new HashSet<>());
         stock1.setQte(1);
         stock1.setQteMin(1);
@@ -170,12 +158,10 @@ class StockRestControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("{\"idStock\":1,\"libelleStock\":\"Libelle Stock\",\"qte\":1,\"qteMin\":1}"));
+                        .string("{\"idStock\":1,\"libelleStock\":\"hhkj2jop8kp5j\",\"qte\":1,\"qteMin\":1}"));
     }
 
-    /**
-     * Method under test: {@link StockRestController#removeStock(Long)}
-     */
+
     @Test
     void testRemoveStock() throws Exception {
         doNothing().when(this.iStockService).deleteStock((Long) any());
@@ -186,14 +172,12 @@ class StockRestControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
-    /**
-     * Method under test: {@link StockRestController#removeStock(Long)}
-     */
+
     @Test
     void testRemoveStock2() throws Exception {
         doNothing().when(this.iStockService).deleteStock((Long) any());
         MockHttpServletRequestBuilder deleteResult = MockMvcRequestBuilders.delete("/stock/remove-stock/{stock-id}", 1L);
-        deleteResult.contentType("https://example.org/example");
+
         MockMvcBuilders.standaloneSetup(this.stockRestController)
                 .build()
                 .perform(deleteResult)

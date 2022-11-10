@@ -11,14 +11,14 @@ pipeline {
         // This can be http or https
         NEXUS_PROTOCOL = "http"
         // Where your Nexus is running
-        NEXUS_URL = "20.150.204.104/nexus"
+        NEXUS_URL = "20.224.107.0/nexus"
         // Repository where we will upload the artifact
         NEXUS_REPOSITORY = "maven-app"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexus-user-credentials" // 3malt credentials f jenkins w 3aythomlhom houni for security reasons
         DOCKERHUB_USERNAME ="hamdinh98"
         DOCKERHUB_REPO = "images-repo"
-        TARGET_BRANCH = "hamdi" // hedi tetbadel selon el branch eli bech truni aleha script
+        TARGET_BRANCH = "master" // hedi tetbadel selon el branch eli bech truni aleha script
     } 
     stages {
         stage("Increment version")
@@ -39,7 +39,7 @@ pipeline {
         {
             steps{
                 script{
-                    withCredentials([usernamePassword(credentialsId: 'jenkins-github-auth', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: 'github-auth', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh 'pwd'
                         sh 'git config --global user.email "jenkins@exemple.com"'
                         sh 'git config --global user.name "jenkins"'
@@ -55,19 +55,8 @@ pipeline {
                 }
             }
         }
-        stage("sonarqube analysis")
-        {
-             
-           steps{
-             script{
-                withSonarQubeEnv(credentialsId: 'jenkins-auth')
-                {
-                    sh 'mvn -Dmaven.test.skip=true clean package sonar:sonar'
-                }
-             }
-           }
-        }
-        stage("build poject")
+
+         stage("build poject")
         {
             steps{
                 echo 'building maven project'
@@ -81,6 +70,32 @@ pipeline {
                 sh "mvn test"
             }
         }
+        stage("sonarqube analysis")
+        {
+             
+           steps{
+             script{
+                withSonarQubeEnv(credentialsId: 'sonar_credentials')
+                {
+                    sh 'mvn -Dmaven.test.skip=true clean package sonar:sonar'
+                }
+                
+             }
+           }
+        }
+
+        stage("Quality status")
+        { 
+           steps{
+             script{
+                waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-auth'
+             }
+           }
+        }
+        
+
+       
+
 
         stage("build docker image")
         {

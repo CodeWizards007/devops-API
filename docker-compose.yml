@@ -2,7 +2,6 @@ version: "3"
 services:
   mysqldb:
     image: mysql:5.7
-    container_name:"mysql-database"
     restart: unless-stopped
     environment:
       - MYSQL_ROOT_PASSWORD=root
@@ -15,7 +14,6 @@ services:
     depends_on:
       - mysqldb
     image: ${IMAGE_NAME}
-    container_name: "app_container"
     restart: on-failure
     ports:
       - "8090:8089"

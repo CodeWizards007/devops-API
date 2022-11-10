@@ -11,14 +11,14 @@ pipeline {
         // This can be http or https
         NEXUS_PROTOCOL = "http"
         // Where your Nexus is running
-        NEXUS_URL = "20.150.204.104/nexus"
+        NEXUS_URL = "20.224.107.0/nexus"
         // Repository where we will upload the artifact
         NEXUS_REPOSITORY = "maven-app"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexus-user-credentials" // 3malt credentials f jenkins w 3aythomlhom houni for security reasons
         DOCKERHUB_USERNAME ="hamdinh98"
         DOCKERHUB_REPO = "images-repo"
-        TARGET_BRANCH = "hamdi" // hedi tetbadel selon el branch eli bech truni aleha script
+        TARGET_BRANCH = "master" // hedi tetbadel selon el branch eli bech truni aleha script
     } 
     stages {
         stage("Increment version")
@@ -39,7 +39,8 @@ pipeline {
         {
             steps{
                 script{
-                    withCredentials([usernamePassword(credentialsId: 'jenkins-github-auth', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: 'github-auth', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh 'pwd'
                         sh 'git config --global user.email "jenkins@exemple.com"'
                         sh 'git config --global user.name "jenkins"'
                         sh 'git config --list'
@@ -48,9 +49,25 @@ pipeline {
                         sh 'git commit -m "update project version"'
                         sh 'git pull origin ${TARGET_BRANCH}'
                         sh 'git branch'
+                        
                         sh 'git push origin HEAD:${TARGET_BRANCH}'
                     }
                 }
+            }
+        }
+
+         stage("build poject")
+        {
+            steps{
+                echo 'building maven project'
+                buildJar()
+            }
+        }
+        stage('Unit test')
+        {
+            steps{
+                echo " testing the app .."
+                sh "mvn test"
             }
         }
         stage("sonarqube analysis")
@@ -58,10 +75,11 @@ pipeline {
              
            steps{
              script{
-                withSonarQubeEnv(credentialsId: 'jenkins-auth')
+                withSonarQubeEnv(credentialsId: 'sonar_credentials')
                 {
                     sh 'mvn -Dmaven.test.skip=true clean package sonar:sonar'
                 }
+                
              }
            }
         }
@@ -76,20 +94,8 @@ pipeline {
         }
         
 
-        stage("build poject")
-        {
-            steps{
-                echo 'building maven project'
-                buildJar()
-            }
-        }
-        stage('Unit test')
-        {
-            steps{
-                echo " testing the app .."
-                sh "mvn test"
-            }
-        }
+       
+
 
         stage("build docker image")
         {
@@ -97,10 +103,9 @@ pipeline {
             steps{
                 echo "building docker images"
                 sh "docker image prune"
+                sh "docker container prune"
                 buildImage("${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME}")
             }
-            
-              
         }
         stage("pushing docker image to dockerhub")
         {

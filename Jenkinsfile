@@ -1,10 +1,12 @@
 
 @Library('jenkins-shared-library')_
+
 pipeline {
     agent any
     tools{
     maven "maven" 
     }
+
     
     environment {
         // This can be nexus3 or nexus2
@@ -21,10 +23,12 @@ pipeline {
         DOCKERHUB_REPO = "riadhapps"
         TARGET_BRANCH = "riadh" // hedi tetbadel selon el branch eli bech truni aleha script
     } 
+
     stages {
-        stage("Increment version")
+        stage("show env vars")
         {
             steps{
+
                 script{
                 sh 'mvn -Dmaven.test.skip=true build-helper:parse-version versions:set\
                     -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \
@@ -185,4 +189,5 @@ pipeline {
         }
         }
     }
+
 }

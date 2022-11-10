@@ -16,8 +16,8 @@ pipeline {
         NEXUS_REPOSITORY = "maven-app"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexus-user-credentials" // 3malt credentials f jenkins w 3aythomlhom houni for security reasons
-        DOCKERHUB_USERNAME ="hamdinh98"
-        DOCKERHUB_REPO = "images-repo"
+        DOCKERHUB_USERNAME ="hamdinh98" // username bech yetbadel 
+        DOCKERHUB_REPO = "images-repo" // repo name bech yetbadel
         TARGET_BRANCH = "hamdi" // hedi tetbadel selon el branch eli bech truni aleha script
     } 
     stages {
@@ -171,7 +171,8 @@ pipeline {
         stage("run app with docker-compose")
         {
             steps{
-                sh "docker-compose down"
+                sh "docker stop app_container && docker rm app_container"
+                sh "docker stop mysql-database && docker rm mysql-database"
                 sh "IMAGE_NAME=${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME} docker-compose up -d" 
             }
         }

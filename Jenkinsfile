@@ -171,8 +171,7 @@ pipeline {
         stage("run app with docker-compose")
         {
             steps{
-                sh "docker stop app_container && docker rm app_container"
-                sh "docker stop mysql-database && docker rm mysql-database"
+                sh "docker-compose down"
                 sh "IMAGE_NAME=${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME} docker-compose up -d" 
             }
         }

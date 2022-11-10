@@ -1,3 +1,4 @@
+
 @Library('jenkins-shared-library')_
 pipeline {
     agent any
@@ -16,9 +17,9 @@ pipeline {
         NEXUS_REPOSITORY = "maven-app"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexus-user-credentials" // 3malt credentials f jenkins w 3aythomlhom houni for security reasons
-        DOCKERHUB_USERNAME ="teymour21"
-        DOCKERHUB_REPO = "devopsimage"
-        TARGET_BRANCH = "taymour" // hedi tetbadel selon el branch eli bech truni aleha script
+        DOCKERHUB_USERNAME ="riadhyahyaoui"
+        DOCKERHUB_REPO = "riadhapps"
+        TARGET_BRANCH = "riadh" // hedi tetbadel selon el branch eli bech truni aleha script
     } 
     stages {
         stage("Increment version")
@@ -112,7 +113,7 @@ pipeline {
               
          steps{
          echo "pushing docker images ... "
-            withCredentials([usernamePassword(credentialsId: 'taymour-docker-hub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+            withCredentials([usernamePassword(credentialsId: 'riadh_cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                echo "login to dockerhub images repos"
                sh "echo $PASSWORD | docker login -u $USERNAME --password-stdin"
                echo "push the images to dockerhub"

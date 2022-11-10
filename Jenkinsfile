@@ -16,7 +16,7 @@ pipeline {
         NEXUS_REPOSITORY = "maven-app"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "nexus-user-credentials" // 3malt credentials f jenkins w 3aythomlhom houni for security reasons
-        DOCKERHUB_USERNAME ="saifHouji"
+        DOCKERHUB_USERNAME ="saifhouji"
         DOCKERHUB_REPO = "repodevops"
         TARGET_BRANCH = "saif" // hedi tetbadel selon el branch eli bech truni aleha script
     } 

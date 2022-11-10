@@ -122,6 +122,21 @@
       </execution>
     </executions>
   </plugin>
+			<plugin>
+  <groupId>org.sonatype.plugins</groupId>
+  <artifactId>nxrm3-maven-plugin</artifactId>
+  <!-- replace plugin version with the latest available -->
+  <!-- https://search.maven.org/search?q=a:nxrm3-maven-plugin -->
+  <version>1.0.3</version>
+  <extensions>true</extensions>
+  <configuration>
+    <nexusUrl>http://http://20.224.107.0/nexus</nexusUrl>
+    <serverId>local-nexus</serverId>
+    <!-- Which repository to deploy to -->
+    <repository>maven-app</repository>  
+    <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+  </configuration>
+</plugin>
 		</plugins>
 	</build>
 

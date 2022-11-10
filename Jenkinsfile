@@ -172,7 +172,7 @@ pipeline {
         {
             steps{
                 sh "docker-compose down"
-                sh "IMAGE_NAME=${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME} docker-compose up -d" 
+                sh "IMAGE_NAME=${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME} docker-compose up -d --no-recreate" 
             }
         }
         stage("Email notification")

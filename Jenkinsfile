@@ -18,7 +18,7 @@ pipeline {
         NEXUS_CREDENTIAL_ID = "nexus-user-credentials" // 3malt credentials f jenkins w 3aythomlhom houni for security reasons
         DOCKERHUB_USERNAME ="teymour21"
         DOCKERHUB_REPO = "devopsimage"
-        TARGET_BRANCH = "taymour" // hedi tetbadel selon el branch eli bech truni aleha script
+        TARGET_BRANCH = "teymour" // hedi tetbadel selon el branch eli bech truni aleha script
     } 
     stages {
         stage("Increment version")

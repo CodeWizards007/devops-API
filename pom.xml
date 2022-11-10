@@ -12,7 +12,7 @@
 	
 	<groupId>tn.esprit.rh</groupId>
 	<artifactId>achat</artifactId>
-	<version>1.0.55</version>
+	<version>1.0.56</version>
 	<name>achat</name>
 	<description>Projet pour le module DevOps</description>
 	<properties>

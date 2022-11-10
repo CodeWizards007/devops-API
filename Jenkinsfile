@@ -96,6 +96,7 @@ pipeline {
 
        
 
+
         stage("build docker image")
         {
             

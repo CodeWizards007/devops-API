@@ -172,6 +172,7 @@ pipeline {
         {
             steps{
                 sh "docker-compose down"
+                sh "docker stop $(docker ps --filter name=mysql* -aq)"
                 sh "IMAGE_NAME=${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:maven-${IMAGE_NAME} docker-compose up -d" 
             }
         }

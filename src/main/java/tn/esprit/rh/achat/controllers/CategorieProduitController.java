@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @Api(tags = "Gestion des categories Produit")
 @RequestMapping("/categorieProduit")
-@CrossOrigin("*")
+@CrossOrigin("host.docker.internal:4200")
 public class CategorieProduitController {
 
 	@Autowired

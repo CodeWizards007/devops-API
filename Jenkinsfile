@@ -82,7 +82,9 @@ pipeline {
              script{
                 withSonarQubeEnv(credentialsId: 'sonar_credentials')
                 {
-                    sh 'mvn  clean package sonar:sonar'
+
+                    sh 'mvn clean package sonar:sonar'
+
                 }
                 
              }

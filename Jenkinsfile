@@ -25,7 +25,7 @@ pipeline {
     } 
 
     stages {
-        stage("show env vars")
+        stage("increment project version")
         {
             steps{
 
